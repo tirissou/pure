@@ -227,6 +227,21 @@ prompt_pure_precmd() {
 		export VIRTUAL_ENV_DISABLE_PROMPT=12
 	fi
 
+	# Set the AWS Profile. We use a sufficiently high index of psvar (13)
+	# here to avoid collisions with user defined entries.
+	psvar[13]=
+	if test -n "$AWS_OKTA_PROFILE"; then
+		psvar[13]="$(basename "${AWS_OKTA_PROFILE}")"
+	elif test -n "${AWS_VAULT}"; then
+		psvar[13]="$(basename "${AWS_VAULT}")"
+	elif test -n "${AWS_PROFILE}"; then
+		psvar[13]="$(basename "${AWS_PROFILE}")"
+	elif test -n "${AWS_DEFAULT_PROFILE}"; then
+		psvar[13]="$(basename "${AWS_DEFAULT_PROFILE}")"
+	else
+		psvar[13]="default"
+	fi
+
 	# Nix package manager integration. If used from within 'nix shell' - shell name is shown like so:
 	# ~/Projects/flake-utils-plus master
 	# flake-utils-plus ❯
