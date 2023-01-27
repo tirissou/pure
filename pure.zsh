@@ -229,7 +229,7 @@ prompt_pure_precmd() {
 
 	# Set the AWS Profile. We use a sufficiently high index of psvar (13)
 	# here to avoid collisions with user defined entries.
-	psvar[13]="default"
+	psvar[13]=
 	if test -n "$AWS_OKTA_PROFILE"; then
 		psvar[13]="$(basename "${AWS_OKTA_PROFILE}")"
 	elif test -n "${AWS_VAULT}"; then
